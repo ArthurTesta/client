@@ -10,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     uiUpload = 0;
 }
+
+void MainWindow::connects(){
+    connect(ui->actionQuit, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
+}
+
 void MainWindow::showUploadForm(){
     qDebug() << "show upload form";
     if(uiUpload == 0){

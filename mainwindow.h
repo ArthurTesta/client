@@ -19,6 +19,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Upload * uiUpload;
+    void connects();
 
 private slots:
     void showUploadForm();
