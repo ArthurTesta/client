@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "upload.h"
+#include "core.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,10 +20,14 @@ public:
 private:
     Ui::MainWindow *ui;
     Upload * uiUpload;
+    Core * core;
     void connects();
 
 private slots:
     void showUploadForm();
+    void selectFile();
+    void eraseList();
+
 };
 
 #endif // MAINWINDOW_H

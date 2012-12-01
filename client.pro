@@ -14,10 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    upload.cpp
+    upload.cpp \
+    core.cpp \
+    tools.cpp
 
 HEADERS  += mainwindow.h \
-    upload.h
+    upload.h \
+    core.h \
+    tools.h
 
 FORMS    += mainwindow.ui \
     upload.ui
