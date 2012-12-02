@@ -21,7 +21,6 @@ public:
     friend QString & getQStringFromSock(QTcpSocket * t);
     friend void readChar(char * dest, int length,QTcpSocket * t);
     friend void readInt(int * dest, QTcpSocket * t);
-    friend QString & convertCharStoQString(char * source);
     friend QByteArray & getDataFromSock(QTcpSocket * t) throw (Exception);
     friend void writeInt(int * source, QTcpSocket * t);
     friend void writeQString(QString & source, QTcpSocket * t);
