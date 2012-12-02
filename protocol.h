@@ -4,11 +4,11 @@
 #include <QtNetwork>
 
 class Exception;
-QString & getQStringFromSock(QTcpSocket * t);
-void readChar(char * dest, int length,QTcpSocket * t);
-void readInt(int * dest, QTcpSocket * t);
-QByteArray & getDataFromSock(QTcpSocket * t) throw (Exception);
-void writeInt(int * source, QTcpSocket * t);
-void writeQString(QString & source,QTcpSocket * t);
+void readCharSock(char * dest, int length,QTcpSocket * t);
+void readIntSock(int * dest, QTcpSocket * t);
+QString & readQStringSock(QTcpSocket * t);
+QByteArray & readDataSock(QTcpSocket * t) throw (Exception);
+void writeIntSock(int * source, QTcpSocket * t);
+void writeQStringSock(QString & source,QTcpSocket * t);
 
 #endif // PROTOCOL_H

@@ -18,12 +18,12 @@ class Core : QObject
 
 public:
     friend class MainWindow;
-    friend QString & getQStringFromSock(QTcpSocket * t);
-    friend void readChar(char * dest, int length,QTcpSocket * t);
-    friend void readInt(int * dest, QTcpSocket * t);
-    friend QByteArray & getDataFromSock(QTcpSocket * t) throw (Exception);
-    friend void writeInt(int * source, QTcpSocket * t);
-    friend void writeQString(QString & source, QTcpSocket * t);
+    friend void readCharSock(char * dest, int length,QTcpSocket * t);
+    friend void readIntSock(int * dest, QTcpSocket * t);
+    friend QByteArray & readDataSock(QTcpSocket * t) throw (Exception);
+    friend QString & readQStringSock(QTcpSocket * t);
+    friend void writeIntSock(int * source, QTcpSocket * t);
+    friend void writeQStringSock(QString & source,QTcpSocket * t);
 
     Core();
     void setFile(QFileInfo *);
@@ -31,7 +31,8 @@ public:
     ~Core();
 
 private :
-    bool sendFile(QString fileName,QString fileDescription);
+    bool sendFile(QString * fileName,QString * fileDescription);
+    void receiveStream(QString * mediaName);
     bool isSocketConnected(bool type);
     bool initConnection(bool type);
 

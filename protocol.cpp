@@ -2,31 +2,24 @@
 #include "protocol.h"
 #include "tools.h"
 
-QString & getQStringFromSock(QTcpSocket * t){
+
+void readCharSock(char * dest, int length, QTcpSocket * t){
+     t->read((char *) dest, length);
+}
+
+void readIntSock(int * dest, QTcpSocket * t){
+    t->read((char *)dest,sizeof(int));
+}
+
+QString & readQStringSock(QTcpSocket * t){
     int size;
      t->read((char *)&size,sizeof(int));
     char * destTmp = new char [size-1];
      t->read((char *) destTmp, size);
     return Tools::convertCharStoQString(destTmp);
 }
-QString & convertCharStoQString(char * destTmp){
-    QString * dest = new QString;
-    int cpt=0;
-    while (destTmp[cpt]!=0){
-        dest->append(destTmp[cpt]);
-        cpt++;
-    }
-    return (*dest);
-}
 
-void readChar(char * dest, int length, QTcpSocket * t){
-     t->read((char *) dest, length);
-}
-void readInt(int * dest, QTcpSocket * t){
-    t->read((char *)dest,sizeof(int));
-}
-
-QByteArray & getDataFromSock(QTcpSocket * t) throw (Exception){
+QByteArray & readDataSock(QTcpSocket * t) throw (Exception){
     int size=0;
     QByteArray * data = new QByteArray;
      t->read((char *)&size,sizeof(int));
@@ -39,14 +32,16 @@ QByteArray & getDataFromSock(QTcpSocket * t) throw (Exception){
     }
     return (*data);
 }
-void writeInt(int * source, QTcpSocket * t){
+
+void writeIntSock(int * source, QTcpSocket * t){
      t->write(((char *)source),sizeof(int));
 }
-void writeQString(QString & source, QTcpSocket * t){
+
+void writeQStringSock(QString & source, QTcpSocket * t){
     int size = source.length()+1;
     QByteArray ba = source.toLocal8Bit();
     char * tmpStock = ba.data();
-    writeInt(&size,t);
+    writeIntSock(&size,t);
      t->write(tmpStock,size);
 }
 
