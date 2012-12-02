@@ -2,6 +2,7 @@
 #include "ui_upload.h"
 #include <QFileDialog>
 #include "exception.h"
+#include <QDebug>
 Upload::Upload(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Upload),progress(0)
@@ -29,10 +30,11 @@ void Upload::file(){
                     "Sélectrionnez un fichier à ouvrir",
                     QDir::currentPath()
                     ));
-    fileName = file->baseName();
+    fileName = file->absoluteFilePath();
+    qDebug()<<fileName;
     if(fileName != "")
     {
-        ui->label->setText(QFileInfo(fileName).completeBaseName());
+        ui->label->setText(file->completeBaseName());
         ui->pushButton->setEnabled(true);
     }
 }
