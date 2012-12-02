@@ -29,15 +29,17 @@ public:
     void setFile(QFileInfo *);
     void eraseList();
     ~Core();
+    qint64 getFileToUploadSize(QString * filePath);
 
 private :
-    bool sendFile(QString * fileName,QString * fileDescription);
+    bool sendFile(QString * fileName,QString * fileDescription) throw (Exception);
     void receiveStream(QString * mediaName);
     bool isSocketConnected(bool type);
     bool initConnection(bool type);
 
 private slots:
     void createAction();
+    void engageUpload(QString * fileName,QString * fileDescription);
 };
 
 #endif // CORE_H

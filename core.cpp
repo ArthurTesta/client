@@ -33,23 +33,27 @@ void Core::createAction(){
 
 }
 
-bool Core::sendFile(QString * fileName,QString * fileDescription){
+bool Core::sendFile(QString * fileName,QString * fileDescription) throw (Exception){
     if(initConnection(0)){
-        QFile * myFile = new QFile(*fileName);
-        int fileSize = myFile->size();
-        myFile->open(QIODevice::ReadOnly);
-        writeQStringSock(*fileName,&uploadSocket);
-        writeQStringSock(*fileDescription,&uploadSocket);
-        writeIntSock(&fileSize,&uploadSocket);
-        uploadSocket.write(myFile->readAll());
-        uploadSocket.flush();
-        uploadSocket.waitForReadyRead(10000);
-        QString result = readQStringSock(&uploadSocket);
-        if(result.toStdString() == "Everything ok"){
-            qDebug() << "[CLI] - OK";
-        }
-        else {
-            qDebug() << "[CLI] - ERROR";
+        try{
+            QFile * myFile = new QFile(*fileName);
+            int fileSize = myFile->size();
+            myFile->open(QIODevice::ReadOnly);
+            writeQStringSock(*fileName,&uploadSocket);
+            writeQStringSock(*fileDescription,&uploadSocket);
+            writeIntSock(&fileSize,&uploadSocket);
+            uploadSocket.write(myFile->readAll());
+            uploadSocket.flush();
+            uploadSocket.waitForReadyRead(10000);
+            QString result = readQStringSock(&uploadSocket);
+            if(result.toStdString() == "Everything ok"){
+                qDebug() << "[CLI] - OK";
+            }
+            else {
+                qDebug() << "[CLI] - ERROR";
+            }
+        }catch(Exception e){
+            qDebug() << "Error send file";
         }
     } else {
         throw Exception("Error connecting to upload server");
@@ -97,4 +101,17 @@ bool Core::initConnection(bool type){
         connectionState=streamSocket.waitForConnected(5000);
     }
     return connectionState;
+}
+
+qint64 Core::getFileToUploadSize(QString * filePath){
+    return QFile(*filePath).size();
+}
+void Core::engageUpload(QString * fileName,QString * fileDescription){
+    try{
+        if(initConnection(0)){
+            sendFile(fileName,fileDescription);
+        }
+    }catch(Exception e){
+        qDebug() << "Error engageUpload";
+    }
 }

@@ -252,12 +252,12 @@ color: #595959;
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>398</width>
+     <width>401</width>
      <height>76</height>
     </rect>
    </property>
@@ -345,7 +345,7 @@ color: #595959;
 font: 8pt &quot;Arial&quot;;</string>
             </property>
             <property name="value">
-             <number>24</number>
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -383,12 +383,12 @@ font: 8pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>640</x>
      <y>440</y>
-     <width>203</width>
+     <width>211</width>
      <height>33</height>
     </rect>
    </property>
@@ -467,21 +467,10 @@ font: 75 10pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <zorder>textBrowser</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>progressBar</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
   <zorder>tabWidget</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>label</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>verticalSpacer_2</zorder>
-  <zorder>verticalSpacer_3</zorder>
-  <zorder>pushButton</zorder>
   <zorder>pushButton_2</zorder>
-  <zorder>label_9</zorder>
-  <zorder>verticalSpacer_4</zorder>
-  <zorder>verticalSpacer_5</zorder>
  </widget>
  <resources/>
  <connections/>

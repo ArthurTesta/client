@@ -59,4 +59,5 @@ MainWindow::~MainWindow()
 }
 void MainWindow::createAction(){
     connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));
+    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
 }
