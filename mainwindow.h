@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "upload.h"
 #include "core.h"
-
+class TransferMessage;
 namespace Ui {
 class MainWindow;
 }
@@ -27,7 +27,6 @@ private slots:
     void selectFile();
     void eraseList();
     void createAction();
-
 };
 
 #endif // MAINWINDOW_H

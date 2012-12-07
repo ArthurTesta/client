@@ -6,6 +6,7 @@
 namespace Ui {
 class Upload;
 }
+class TransferMessage;
 class MainWindow;
 class Upload : public QWidget
 {
@@ -25,8 +26,9 @@ private:
 private slots :
     void file();
     void createAction();
-    void updateProgress(qint64);
+    void updateProgress(qint64 progress);
     void saveButtonClicked();
+    void showUploadResult(TransferMessage * msg);
 };
 
 #endif // UPLOAD_H

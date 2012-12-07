@@ -16,6 +16,7 @@ QString & readQStringSock(QTcpSocket * t){
      t->read((char *)&size,sizeof(int));
     char * destTmp = new char [size-1];
      t->read((char *) destTmp, size);
+     qDebug() << Tools::convertCharStoQString(destTmp);
     return Tools::convertCharStoQString(destTmp);
 }
 

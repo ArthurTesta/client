@@ -1,5 +1,5 @@
 #include "tools.h"
-
+#include <QVariant>
 Tools::Tools()
 {
 }
@@ -11,11 +11,6 @@ bool Tools::isMovie(QFileInfo *f){
     }
 }
 QString & Tools::convertCharStoQString(char * destTmp){
-    QString * dest = new QString;
-    int cpt=0;
-    while (destTmp[cpt]!=0){
-        dest->append(destTmp[cpt]);
-        cpt++;
-    }
+    QString * dest = new QString(QVariant(destTmp).toString());
     return (*dest);
 }

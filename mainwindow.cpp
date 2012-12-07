@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "tools.h"
+#include "transfermessage.h"
 
 #include <QDebug>
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QDir>
-#include "tools.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +22,7 @@ void MainWindow::showUploadForm(){
     if(uiUpload == 0){
         uiUpload = new Upload();
     }
+    uiUpload->setWindowModality(Qt::WindowModal);
     createAction();
     uiUpload->show();
 }
@@ -46,7 +49,6 @@ void MainWindow::eraseList(){
 
 MainWindow::~MainWindow()
 {
-    delete ui;
     if(uiUpload){
         delete uiUpload;
         uiUpload = 0;
@@ -57,7 +59,9 @@ MainWindow::~MainWindow()
         core = 0;
     }
 }
+
 void MainWindow::createAction(){
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));
+    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
     connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
+    connect(core,SIGNAL(upLoadResultMsg(TransferMessage*)),uiUpload,SLOT(showUploadResult(TransferMessage*)));
 }

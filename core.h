@@ -7,6 +7,7 @@
 #include "exception.h"
 #include "protocol.h"
 class MainWindow;
+class TransferMessage;
 class Core : QObject
 {
     Q_OBJECT
@@ -40,6 +41,8 @@ private :
 private slots:
     void createAction();
     void engageUpload(QString * fileName,QString * fileDescription);
+signals :
+    void upLoadResultMsg(TransferMessage * result);
 };
 
 #endif // CORE_H

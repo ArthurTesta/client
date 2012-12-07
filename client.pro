@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     upload.cpp \
     core.cpp \
     tools.cpp \
-    protocol.cpp
+    protocol.cpp \
+    transfermessage.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
     core.h \
     tools.h \
     protocol.h \
-    exception.h
+    exception.h \
+    transfermessage.h
 
 FORMS    += mainwindow.ui \
     upload.ui

@@ -1,8 +1,11 @@
 #include "upload.h"
 #include "ui_upload.h"
-#include <QFileDialog>
 #include "exception.h"
+#include "transfermessage.h"
+
+#include <QFileDialog>
 #include <QDebug>
+#include <QMessageBox>
 Upload::Upload(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Upload),progress(0)
@@ -16,8 +19,8 @@ Upload::~Upload()
     delete ui;
 }
 void Upload::createAction(){
-    connect(ui->pushButton_2,SIGNAL(clicked()), this, SLOT(file()));
-    connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(saveButtonClicked()));
+    connect(ui->buttonFileToUpload,SIGNAL(clicked()), this, SLOT(file()));
+    connect(ui->buttonSave,SIGNAL(clicked()),this,SLOT(saveButtonClicked()));
 }
 void Upload::updateProgress(qint64 numBytes){
     progress += numBytes;
@@ -30,18 +33,27 @@ void Upload::file(){
                     "Sélectrionnez un fichier à ouvrir",
                     QDir::currentPath()
                     ));
-    fileName = file->absoluteFilePath();
-    qDebug()<<fileName;
+    fileName = file->completeBaseName();
     if(fileName != "")
     {
-        ui->label->setText(file->completeBaseName());
-        ui->pushButton->setEnabled(true);
+        filePath = file->absoluteFilePath();
+        ui->labelFileName->setText(fileName);
+        fileDescription=ui->textEditDescription->toPlainText();
+        ui->buttonSave->setEnabled(true);
     }
 }
 void Upload::saveButtonClicked(){
-    if(ui->lineEdit->text()!="" && ui->textEdit->toPlainText()!=""){
-        emit uploadSignal(&fileName,&fileDescription);
+    if(ui->lineEditTitle->text()!="" && ui->textEditDescription->toPlainText()!=""){
+        emit uploadSignal(&filePath,&fileDescription);
     }else {
-        throw Exception("Filename or description is empty");
+        QMessageBox::critical(this,"Upload",QString("Description file and file name can't be empty"));
+    }
+}
+void Upload::showUploadResult(TransferMessage * msg){
+    if(msg->getCode()){
+        QMessageBox::critical(this,"Upload",msg->getMessage());
+        updateProgress(0);
+    }else {
+        QMessageBox::information(this,"Upload",msg->getMessage());
     }
 }
