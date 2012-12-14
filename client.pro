@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,12 +17,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     upload.cpp \
     core.cpp \
-    tools.cpp
+    tools.cpp \
+    protocol.cpp \
+    transfermessage.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
     core.h \
-    tools.h
+    tools.h \
+    protocol.h \
+    exception.h \
+    transfermessage.h
 
 FORMS    += mainwindow.ui \
     upload.ui

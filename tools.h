@@ -8,6 +8,7 @@ class Tools
 public:
     Tools();
     static bool isMovie(QFileInfo * f);
+    static QString & convertCharStoQString(char * source);
 };
 
 #endif // TOOLS_H

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
+  <widget class="QTabWidget" name="tabWidgetBasic">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -29,7 +29,7 @@
     <attribute name="title">
      <string>Basic Info</string>
     </attribute>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="labelTitle">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -45,7 +45,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#333333;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineEditTitle">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -59,7 +59,7 @@
 border-radius: 2px;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="labelDescription">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -75,7 +75,7 @@ border-radius: 2px;</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#333333;&quot;&gt;Description&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="textEditDescription">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -89,7 +89,7 @@ border-radius: 2px;</string>
 border-radius: 2px;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="labelTags">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -105,7 +105,7 @@ border-radius: 2px;</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#333333;&quot;&gt;Tags&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEditTags">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -123,7 +123,7 @@ color: #919191</string>
       <string>Separate tags with commas</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="labelCategory">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -139,7 +139,7 @@ color: #919191</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#333333;&quot;&gt;Category&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="cbCategory">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -152,7 +152,7 @@ color: #919191</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="cbPrivacySettings">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -165,7 +165,7 @@ color: #919191</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
-    <widget class="QLabel" name="label_7">
+    <widget class="QLabel" name="labelPrivacySettings">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -181,7 +181,7 @@ color: #919191</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#333333;&quot;&gt;Privacy Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="cbLicence">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -194,7 +194,7 @@ color: #919191</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="labelLicence">
      <property name="geometry">
       <rect>
        <x>590</x>
@@ -217,7 +217,7 @@ color: #919191</string>
     </attribute>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="buttonFileToUpload">
    <property name="geometry">
     <rect>
      <x>770</x>
@@ -249,15 +249,15 @@ color: #595959;
 </string>
    </property>
    <property name="text">
-    <string>Cancel</string>
+    <string>File</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>398</width>
+     <width>401</width>
      <height>76</height>
     </rect>
    </property>
@@ -299,7 +299,7 @@ color: #595959;
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="labelFileName">
           <property name="minimumSize">
            <size>
             <width>255</width>
@@ -315,7 +315,7 @@ color: #595959;
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="labelEstimatedTime">
           <property name="styleSheet">
            <string notr="true">font: 8pt &quot;Arial&quot;;</string>
           </property>
@@ -345,7 +345,7 @@ color: #595959;
 font: 8pt &quot;Arial&quot;;</string>
             </property>
             <property name="value">
-             <number>24</number>
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -383,12 +383,12 @@ font: 8pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>640</x>
      <y>440</y>
-     <width>203</width>
+     <width>211</width>
      <height>33</height>
     </rect>
    </property>
@@ -409,7 +409,7 @@ font: 8pt &quot;Arial&quot;;</string>
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="labelAutoSaving">
         <property name="styleSheet">
          <string notr="true">font: 8pt &quot;Arial&quot;;</string>
         </property>
@@ -434,7 +434,7 @@ font: 8pt &quot;Arial&quot;;</string>
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="buttonSave">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -467,21 +467,10 @@ font: 75 10pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <zorder>textBrowser</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>progressBar</zorder>
-  <zorder>tabWidget</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>label</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>verticalSpacer_2</zorder>
-  <zorder>verticalSpacer_3</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>pushButton_2</zorder>
-  <zorder>label_9</zorder>
-  <zorder>verticalSpacer_4</zorder>
-  <zorder>verticalSpacer_5</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>tabWidgetBasic</zorder>
+  <zorder>buttonFileToUpload</zorder>
  </widget>
  <resources/>
  <connections/>
