@@ -34,3 +34,8 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     upload.ui \
     uilibrary.ui
+
+OTHER_FILES +=
+
+RESOURCES += \
+    src.qrc

@@ -348,7 +348,7 @@ font: 8pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>560</x>
@@ -415,18 +415,24 @@ font: 8pt &quot;Arial&quot;;</string>
         <height>31</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">border: 1px solid gray;
+       <string notr="true">border: 1px solid #363636;
 background-color:  #f9f9f9;
 border-radius: 2px;
-color: #595959;
-font: 75 10pt &quot;Arial&quot;;</string>
+color: #363636;
+</string>
       </property>
       <property name="text">
-       <string>Upload</string>
+       <string>Pause</string>
       </property>
      </widget>
     </item>
@@ -470,7 +476,6 @@ color: #363636;
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>tabWidgetBasic</zorder>
-  <zorder>buttonCancel</zorder>
  </widget>
  <resources/>
  <connections/>
