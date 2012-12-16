@@ -11,15 +11,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),uiUpload(0)
+    ui(new Ui::MainWindow),uiUpload(0), uiLib(0)
 {
     ui->setupUi(this);
     core = new Core();
 }
 
 void MainWindow::showUploadForm(){
-    qDebug() << "show upload form";
-    if(uiUpload == 0){
+    qDebug() << "show upload form UI";
+    if(!uiUpload){
         uiUpload = new Upload();
     }
     uiUpload->setWindowModality(Qt::WindowModal);
@@ -27,7 +27,17 @@ void MainWindow::showUploadForm(){
     uiUpload->show();
 }
 
-void MainWindow::selectFile(){
+void MainWindow::showLibraryUI() {
+    qDebug() << "show library UI";
+    if(!uiLib) {
+        uiLib = new uiLibrary();
+    }
+    uiLib->setWindowModality(Qt::WindowModal);
+    uiLib->show();
+}
+
+void MainWindow::openFile(){
+    qDebug() << "open file to read";
     /**
      * Modifier le QFileDialog pour bloquer
      * que certain types de fichiers.
@@ -39,12 +49,36 @@ void MainWindow::selectFile(){
                     "Sélectrionnez un fichier à ouvrir",
                     QDir::currentPath()
                     ));
-    if(Tools::isMovie(file))
+    if(file && Tools::isMovie(file))
         core->setFile(file);
 }
 
+void MainWindow::selectFileToUpload(){
+    qDebug() << "select file to upload";
+    QFileInfo * file = new QFileInfo(
+                QFileDialog::getOpenFileName(
+                    this,
+                    "Sélectrionnez un fichier à ouvrir",
+                    QDir::currentPath()
+                    ));
+    if(file && Tools::isMovie(file)){
+        showUploadForm();
+    }
+}
+
 void MainWindow::eraseList(){
-    core->eraseList();
+    if(core){
+        core->eraseList();
+    }
+}
+
+/**
+ * @brief connect à redéfinir
+ */
+void MainWindow::createAction(){
+    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
+    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
+    connect(core,SIGNAL(upLoadResultMsg(TransferMessage*)),uiUpload,SLOT(showUploadResult(TransferMessage*)));
 }
 
 MainWindow::~MainWindow()
@@ -58,10 +92,4 @@ MainWindow::~MainWindow()
         delete core;
         core = 0;
     }
-}
-
-void MainWindow::createAction(){
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
-    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(upLoadResultMsg(TransferMessage*)),uiUpload,SLOT(showUploadResult(TransferMessage*)));
 }

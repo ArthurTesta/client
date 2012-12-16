@@ -217,41 +217,6 @@ color: #919191</string>
     </attribute>
    </widget>
   </widget>
-  <widget class="QPushButton" name="buttonFileToUpload">
-   <property name="geometry">
-    <rect>
-     <x>770</x>
-     <y>30</y>
-     <width>75</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>75</width>
-     <height>31</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>75</width>
-     <height>31</height>
-    </size>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border: 1px solid gray;
-background-color:  #f9f9f9;
-border-radius: 2px;
-color: #595959;
-</string>
-   </property>
-   <property name="text">
-    <string>File</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
@@ -383,13 +348,13 @@ font: 8pt &quot;Arial&quot;;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>640</x>
+     <x>560</x>
      <y>440</y>
-     <width>211</width>
-     <height>33</height>
+     <width>286</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -402,8 +367,8 @@ font: 8pt &quot;Arial&quot;;</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>13</width>
+          <height>13</height>
          </size>
         </property>
        </spacer>
@@ -414,7 +379,7 @@ font: 8pt &quot;Arial&quot;;</string>
          <string notr="true">font: 8pt &quot;Arial&quot;;</string>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#666666;&quot;&gt;Autosaving activated&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#666666;&quot;&gt;Autoupload activated&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -425,8 +390,8 @@ font: 8pt &quot;Arial&quot;;</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>13</width>
+          <height>13</height>
          </size>
         </property>
        </spacer>
@@ -434,7 +399,7 @@ font: 8pt &quot;Arial&quot;;</string>
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="buttonSave">
+     <widget class="QPushButton" name="buttonUpload">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -461,7 +426,42 @@ color: #595959;
 font: 75 10pt &quot;Arial&quot;;</string>
       </property>
       <property name="text">
-       <string>Save</string>
+       <string>Upload</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonCancel">
+      <property name="minimumSize">
+       <size>
+        <width>75</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>75</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 1px solid #363636;
+background-color:  #f9f9f9;
+border-radius: 2px;
+color: #363636;
+</string>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
       </property>
      </widget>
     </item>
@@ -470,7 +470,7 @@ font: 75 10pt &quot;Arial&quot;;</string>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>tabWidgetBasic</zorder>
-  <zorder>buttonFileToUpload</zorder>
+  <zorder>buttonCancel</zorder>
  </widget>
  <resources/>
  <connections/>
