@@ -25,6 +25,7 @@ private:
     Core * core;
     void showUploadForm();
     void createAction();
+    void refreshListFiles();
 
 private slots:
     void showLibraryUI();

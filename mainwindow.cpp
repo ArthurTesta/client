@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QDir>
+#include <QList>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -28,7 +29,7 @@ void MainWindow::showUploadForm(){
 }
 
 void MainWindow::showLibraryUI() {
-    qDebug() << "show library UI";
+    //qDebug() << "show library UI";
     if(!uiLib) {
         uiLib = new uiLibrary();
     }
@@ -37,7 +38,7 @@ void MainWindow::showLibraryUI() {
 }
 
 void MainWindow::openFile(){
-    qDebug() << "open file to read";
+    //qDebug() << "open file to read";
     /**
      * Modifier le QFileDialog pour bloquer
      * que certain types de fichiers.
@@ -49,8 +50,28 @@ void MainWindow::openFile(){
                     "Sélectrionnez un fichier à ouvrir",
                     QDir::currentPath()
                     ));
-    if(file && Tools::isMovie(file))
+    if(file && Tools::isMovie(file)){
         core->setFile(file);
+        refreshListFiles();
+    }
+}
+
+/**
+ * fonction à modifier car il y a un duplicata des filename dans le menu
+ * car on purge pas le menu avant
+ * soit on purge et on add la liste + effacer
+ * soit on add juste un filename en début de liste (comment ?)
+ */
+void MainWindow::refreshListFiles(){
+    QList<QFileInfo*>* files= core->getList();
+    for(QList<QFileInfo*>::const_iterator it = files->begin(); it != files->end(); it++){
+        QFileInfo* file = static_cast<QFileInfo *>(*it);
+        // insérer le nom de fichier dans la liste du menu
+        QAction * action = new QAction(this);
+        action->setObjectName(file->fileName());
+        action->setText(file->completeBaseName());
+        ui->menuFichiers_r_cents->addAction(action);
+    }
 }
 
 void MainWindow::selectFileToUpload(){
