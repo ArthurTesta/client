@@ -54,6 +54,12 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">border: 1px solid gray;
 border-radius: 2px;</string>
@@ -84,6 +90,12 @@ border-radius: 2px;</string>
        <height>81</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">border: 1px solid gray;
 border-radius: 2px;</string>
@@ -113,6 +125,12 @@ border-radius: 2px;</string>
        <width>521</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">border: 1px solid gray;
@@ -148,6 +166,12 @@ color: #919191</string>
        <height>31</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -160,6 +184,12 @@ color: #919191</string>
        <width>201</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
@@ -189,6 +219,12 @@ color: #919191</string>
        <width>201</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>

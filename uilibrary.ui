@@ -10,20 +10,38 @@
     <height>548</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>870</width>
+    <height>548</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>870</width>
+    <height>548</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListView" name="listView">
+  <widget class="QListView" name="library">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-1</y>
      <width>261</width>
      <height>551</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditTitle">
+  <widget class="QLineEdit" name="search">
    <property name="geometry">
     <rect>
      <x>320</x>
@@ -39,7 +57,7 @@ border-radius: 2px;</string>
   </widget>
   <widget class="QPushButton" name="buttonUpload">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -67,9 +85,81 @@ font: 75 10pt &quot;Arial&quot;;</string>
      <normaloff>:/images/search_icon.png</normaloff>:/images/search_icon.png</iconset>
    </property>
   </widget>
+  <widget class="QListView" name="listSearch">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>60</y>
+     <width>441</width>
+     <height>192</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="src.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>search</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>uiLibrary</receiver>
+   <slot>enterKey(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>342</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search</sender>
+   <signal>returnPressed()</signal>
+   <receiver>uiLibrary</receiver>
+   <slot>searchProcess()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>536</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonUpload</sender>
+   <signal>clicked()</signal>
+   <receiver>uiLibrary</receiver>
+   <slot>searchProcess()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>780</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>812</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>enterKey(QString)</slot>
+  <slot>searchProcess()</slot>
+ </slots>
 </ui>

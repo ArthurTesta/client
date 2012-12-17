@@ -2,6 +2,7 @@
 #define UILIBRARY_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class uiLibrary;
@@ -17,6 +18,11 @@ public:
     
 private:
     Ui::uiLibrary *ui;
+    void search(QString);
+
+private slots:
+    void enterKey(QString);
+    void searchProcess();
 };
 
 #endif // UILIBRARY_H
