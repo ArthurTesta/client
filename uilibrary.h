@@ -7,7 +7,7 @@
 namespace Ui {
 class uiLibrary;
 }
-
+class Media;
 class uiLibrary : public QWidget
 {
     Q_OBJECT
@@ -24,7 +24,7 @@ private:
 private slots:
     void enterKey(QString);
     void searchProcess();
-    void receiveSearchResult(QList < QString > * listMediaAlike);
+    void receiveSearchResult(QList < Media > * listMediaAlike);
 signals :
     void sendSearchRequest(QString * fileName);
 };

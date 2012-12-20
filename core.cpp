@@ -1,5 +1,6 @@
 #include "core.h"
 #include "transfermessage.h"
+#include "media.h"
 
 #include <QRegExp>
 #include <QDebug>
@@ -60,25 +61,20 @@ bool Core::sendFile(QString * completeFileName,QString * fileDescription) throw 
     }
 }
 void Core::receiveStream(QString * mediaName){
-    writeQStringSock(*mediaName,&streamSocket);
-    streamSocket.flush();
-    streamSocket.waitForReadyRead(10000);
-    /*    int mediaSize;
-    QByteArray mediaData;
-    readIntSock(&mediaSize,&streamSocket);
-    mediaData+=readDataSock(&streamSocket);
-    QString fileDestination("/home/");
-    fileDestination.append(getenv("USER"));*/
-    int resultCode=-1;
-    readIntSock(&resultCode,&uploadSocket);
-    QString resultMsg = readQStringSock(&uploadSocket);
-    emit transferMsg(new TransferMessage(resultMsg,resultCode));
-    streamSocket.close();
+    try {
+        writeQStringSock(*mediaName,&streamSocket);
+        streamSocket.flush();
+        streamSocket.waitForReadyRead(10000);
+        int resultCode=-1;
+        readIntSock(&resultCode,&uploadSocket);
+        QString resultMsg = readQStringSock(&uploadSocket);
+        emit transferMsg(new TransferMessage(resultMsg,resultCode));
+        streamSocket.close();
+    } catch (Exception e){
+        emit transferMsg(new transferMsg(e.what(),-1));
+    }
 }
 
-/*
-  type==0 si upload
- */
 bool Core::isSocketConnected(int type){
     if(!type){
         return uploadSocket.waitForConnected(0);
@@ -115,10 +111,13 @@ void Core::sendSearchRequest(QString *fileName){
     searchSocket.flush();
     searchSocket.waitForReadyRead(10000);
     int mediaAlikeCount=0;
-    QList < QString > listMediaAlike;
+    QList < Media > listMediaAlike;
     readIntSock(&mediaAlikeCount,&searchSocket);
     for(int cpt=0;cpt<mediaAlikeCount;cpt++){
-        QString tmp = readQStringSock(&searchSocket);
+        QString title = readQStringSock(&searchSocket);
+        QString synopsis = readQStringSock(&searchSocket);
+        QString date = readQStringSock(&searchSocket);
+        Media tmp(cpt,title,synopsis,date);
         listMediaAlike.push_back(tmp);
     }
     emit mediaAlikeList(&listMediaAlike);

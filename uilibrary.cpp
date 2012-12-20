@@ -35,7 +35,7 @@ void uiLibrary::enterKey(QString str){
 void uiLibrary::searchProcess(){
     search(ui->search->text());
 }
-void uiLibrary::receiveSearchResult(QList < QString > * listMediaAlike){
+void uiLibrary::receiveSearchResult(QList < Media > * listMediaAlike){
      //dowhatevayawanthere
 }
 

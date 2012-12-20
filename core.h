@@ -8,6 +8,7 @@
 #include "protocol.h"
 class MainWindow;
 class TransferMessage;
+class Media;
 class Core : QObject
 {
     Q_OBJECT
@@ -46,7 +47,7 @@ private slots:
     void engageStream(QString * fileName);
 signals :
     void transferMsg(TransferMessage * result);
-    void mediaAlikeList(QList <QString> *list);
+    void mediaAlikeList(QList <Media> *list);
 };
 
 #endif // CORE_H

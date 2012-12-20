@@ -101,7 +101,7 @@ void MainWindow::createAction(){
     connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
     connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
 
-    connect(core,SIGNAL(mediaAlikeList(QList<QString>*)),uiLib,SLOT(receiveSearchResult(QList<QString>*)));
+    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,SLOT(receiveSearchResult(QList<Media>*)));
     connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
 
     //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,SLOT(engageStream(QString*)));
