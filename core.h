@@ -35,7 +35,7 @@ public:
     QList<QFileInfo*> * getList();
 
 private :
-    bool sendFile(QString * fileName,QString * fileDescription) throw (Exception);
+    void sendFile(QString * fileName,QString * fileDescription) throw (Exception);
     void receiveStream(QString * mediaName);
     bool isSocketConnected(int type);
     bool initConnection(int type);
