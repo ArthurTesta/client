@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     core.cpp \
     tools.cpp \
     protocol.cpp \
-    transfermessage.cpp
+    transfermessage.cpp \
+    uilibrary.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
@@ -27,7 +28,14 @@ HEADERS  += mainwindow.h \
     tools.h \
     protocol.h \
     exception.h \
-    transfermessage.h
+    transfermessage.h \
+    uilibrary.h
 
 FORMS    += mainwindow.ui \
-    upload.ui
+    upload.ui \
+    uilibrary.ui
+
+OTHER_FILES +=
+
+RESOURCES += \
+    src.qrc

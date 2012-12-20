@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "upload.h"
+#include "uilibrary.h"
 #include "core.h"
 class TransferMessage;
 namespace Ui {
@@ -20,13 +21,17 @@ public:
 private:
     Ui::MainWindow *ui;
     Upload * uiUpload;
+    uiLibrary * uiLib;
     Core * core;
+    void showUploadForm();
+    void createAction();
+    void refreshListFiles();
 
 private slots:
-    void showUploadForm();
-    void selectFile();
+    void showLibraryUI();
+    void openFile();
+    void selectFileToUpload();
     void eraseList();
-    void createAction();
 };
 
 #endif // MAINWINDOW_H
