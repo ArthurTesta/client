@@ -19,8 +19,7 @@ Upload::~Upload()
     delete ui;
 }
 void Upload::createAction(){
-    connect(ui->buttonFileToUpload,SIGNAL(clicked()), this, SLOT(file()));
-    connect(ui->buttonSave,SIGNAL(clicked()),this,SLOT(saveButtonClicked()));
+    //connect(ui->buttonSave,SIGNAL(clicked()),this,SLOT(saveButtonClicked()));
 }
 void Upload::updateProgress(qint64 numBytes){
     progress += numBytes;
@@ -34,13 +33,13 @@ void Upload::file(){
                     QDir::currentPath()
                     ));
     fileName = file->completeBaseName();
-    if(fileName != "")
+   /* if(fileName != "")
     {
         filePath = file->absoluteFilePath();
         ui->labelFileName->setText(fileName);
         fileDescription=ui->textEditDescription->toPlainText();
         ui->buttonSave->setEnabled(true);
-    }
+    }*/
 }
 void Upload::saveButtonClicked(){
     if(ui->lineEditTitle->text()!="" && ui->textEditDescription->toPlainText()!=""){

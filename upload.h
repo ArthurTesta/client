@@ -20,7 +20,7 @@ signals :
     void uploadSignal(QString * file,QString * desc);
 private:
     QString fileName,filePath,fileDescription;
-    int progress;
+    qint64 progress;
     Ui::Upload *ui;
 
 private slots :

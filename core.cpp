@@ -15,11 +15,7 @@ void Core::setFile(QFileInfo *f){
     if(f){
         listFiles->insert(listFiles->begin(), f);
     }
-    for(int i=0; i<listFiles->size(); i++){
-        qDebug() << listFiles->at(i)->fileName();
-    }
-    qDebug(); //LF
-    // traitement possible du fichier
+    // traitement possible du fichier pour lecture
 }
 
 void Core::eraseList(){
@@ -29,8 +25,12 @@ void Core::eraseList(){
     listFiles->erase(listFiles->begin(), listFiles->end());
 }
 
+QList<QFileInfo*> * Core::getList(){
+    return listFiles;
+}
+
 Core::~Core(){
-    delete listFiles;
+    delete listFiles; // quid de la référence renvoyée via le getList() ?
 }
 
 void Core::createAction(){

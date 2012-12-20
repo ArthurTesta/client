@@ -31,6 +31,7 @@ public:
     void eraseList();
     ~Core();
     qint64 getFileToUploadSize(QString * filePath);
+    QList<QFileInfo*> * getList();
 
 private :
     bool sendFile(QString * fileName,QString * fileDescription) throw (Exception);
