@@ -14,6 +14,7 @@ void uiLibrary::search(QString str){
     if(!str.isEmpty()){
         // effectuer le search sur la DB pour avoir un résultat (de type média)
         //core->search(str);
+        emit sendSearchRequest(str);
         qDebug() << "search : " << str;
     }
 }
@@ -33,6 +34,9 @@ void uiLibrary::enterKey(QString str){
 
 void uiLibrary::searchProcess(){
     search(ui->search->text());
+}
+void uiLibrary::receiveSearchResult(QList < QString > * listMediaAlike){
+     //dowhatevayawanthere
 }
 
 uiLibrary::~uiLibrary()

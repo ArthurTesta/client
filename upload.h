@@ -28,7 +28,7 @@ private slots :
     void createAction();
     void updateProgress(qint64 progress);
     void saveButtonClicked();
-    void showUploadResult(TransferMessage * msg);
+    void receiveUploadResult(TransferMessage * msg);
 };
 
 #endif // UPLOAD_H

@@ -32,6 +32,8 @@ private slots:
     void openFile();
     void selectFileToUpload();
     void eraseList();
+    void receiveStreamResult(TransferMessage * msg);
+
 };
 
 #endif // MAINWINDOW_H

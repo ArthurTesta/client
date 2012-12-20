@@ -48,7 +48,7 @@ void Upload::saveButtonClicked(){
         QMessageBox::critical(this,"Upload",QString("Description file and file name can't be empty"));
     }
 }
-void Upload::showUploadResult(TransferMessage * msg){
+void Upload::receiveUploadResult(TransferMessage * msg){
     if(msg->getCode()){
         QMessageBox::critical(this,"Upload",msg->getMessage());
         updateProgress(0);

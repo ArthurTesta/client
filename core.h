@@ -13,8 +13,8 @@ class Core : QObject
     Q_OBJECT
 
     QList<QFileInfo *> * listFiles;
-    int uploadPort,streamPort;
-    QTcpSocket uploadSocket, streamSocket;
+    int uploadPort,streamPort,searchPort;
+    QTcpSocket uploadSocket, streamSocket,searchSocket;
     QString serverIP;
 
 public:
@@ -36,14 +36,17 @@ public:
 private :
     bool sendFile(QString * fileName,QString * fileDescription) throw (Exception);
     void receiveStream(QString * mediaName);
-    bool isSocketConnected(bool type);
-    bool initConnection(bool type);
-
+    bool isSocketConnected(int type);
+    bool initConnection(int type);
+    void sendSearchRequest(QString * fileName);
 private slots:
     void createAction();
     void engageUpload(QString * fileName,QString * fileDescription);
+    void engageSearch(QString * fileName);
+    void engageStream(QString * fileName);
 signals :
-    void upLoadResultMsg(TransferMessage * result);
+    void transferMsg(TransferMessage * result);
+    void mediaAlikeList(QList <QString> *list);
 };
 
 #endif // CORE_H

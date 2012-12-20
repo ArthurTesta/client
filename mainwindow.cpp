@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QList>
-
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -99,7 +99,21 @@ void MainWindow::eraseList(){
 void MainWindow::createAction(){
     connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
     connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(upLoadResultMsg(TransferMessage*)),uiUpload,SLOT(showUploadResult(TransferMessage*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
+
+    connect(core,SIGNAL(mediaAlikeList(QList<QString>*)),uiLib,SLOT(receiveSearchResult(QList<QString>*)));
+    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
+
+    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,SLOT(engageStream(QString*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),this,SLOT(receiveStreamResult(TransferMessage*)));
+}
+
+void MainWindow::receiveStreamResult(TransferMessage *msg){
+    if(!msg->getCode()){
+        //stream
+    }else{
+        QMessageBox::critical(this,"Stream",msg->getMessage());
+    }
 }
 
 MainWindow::~MainWindow()
