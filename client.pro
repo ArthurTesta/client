@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     tools.cpp \
     protocol.cpp \
     transfermessage.cpp \
-    uilibrary.cpp
+    uilibrary.cpp \
+    media.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     protocol.h \
     exception.h \
     transfermessage.h \
-    uilibrary.h
+    uilibrary.h \
+    media.h
 
 FORMS    += mainwindow.ui \
     upload.ui \

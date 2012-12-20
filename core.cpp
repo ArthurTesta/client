@@ -1,12 +1,13 @@
 #include "core.h"
 #include "transfermessage.h"
+#include "media.h"
 
 #include <QRegExp>
 #include <QDebug>
 #include <stdlib.h>
 
 
-Core::Core():streamPort(4001),uploadPort(4000),serverIP("127.0.0.1")
+Core::Core():streamPort(4001),uploadPort(4000),searchPort(4002),serverIP("127.0.0.1")
 {
     listFiles = new QList<QFileInfo *>();
 }
@@ -53,48 +54,49 @@ bool Core::sendFile(QString * completeFileName,QString * fileDescription) throw 
         int resultCode=-1;
         readIntSock(&resultCode,&uploadSocket);
         QString resultMSg = readQStringSock(&uploadSocket);
-        emit upLoadResultMsg(new TransferMessage(resultMSg,resultCode));
+        emit transferMsg(new TransferMessage(resultMSg,resultCode));
         uploadSocket.close();
     }catch(Exception e){
-        emit upLoadResultMsg(new TransferMessage(e.what(),-1));
+        emit transferMsg(new TransferMessage(e.what(),-1));
     }
 }
 void Core::receiveStream(QString * mediaName){
-    writeQStringSock(*mediaName,&streamSocket);
-    streamSocket.flush();
-    streamSocket.waitForReadyRead(5000);
-    int mediaSize;
-    QByteArray mediaData;
-    readIntSock(&mediaSize,&streamSocket);
-    mediaData+=readDataSock(&streamSocket);
-    QString fileDestination("/home/");
-    fileDestination.append(getenv("USER"));
-    QFile * tmpWaitingForStream = new QFile(fileDestination);
-    if(tmpWaitingForStream->open(QIODevice::Append)){
-        tmpWaitingForStream->write(mediaData);
+    try {
+        writeQStringSock(*mediaName,&streamSocket);
+        streamSocket.flush();
+        streamSocket.waitForReadyRead(10000);
+        int resultCode=-1;
+        readIntSock(&resultCode,&uploadSocket);
+        QString resultMsg = readQStringSock(&uploadSocket);
+        emit transferMsg(new TransferMessage(resultMsg,resultCode));
+        streamSocket.close();
+    } catch (Exception e){
+        emit transferMsg(new TransferMessage(e.what(),-1));
     }
-    streamSocket.close();
 }
 
-/*
-  type==0 si upload
- */
-bool Core::isSocketConnected(bool type){
-    if(type){
+bool Core::isSocketConnected(int type){
+    if(!type){
         return uploadSocket.waitForConnected(0);
     }
-    return streamSocket.waitForConnected(0);
+    if(type==1){
+        return streamSocket.waitForConnected(0);
+    }
+    return searchSocket.waitForConnected(0);
 }
 
-bool Core::initConnection(bool type){
+bool Core::initConnection(int type){
     bool connectionState=false;
     if(isSocketConnected(type)){
         connectionState=true;
     }else if (!type){
         uploadSocket.connectToHost(serverIP,uploadPort);
         connectionState=uploadSocket.waitForConnected(5000);
-    }else if(type){
+    }else if(type==1){
         streamSocket.connectToHost(serverIP,streamPort);
+        connectionState=streamSocket.waitForConnected(5000);
+    }else if(type==2){
+        searchSocket.connectToHost(serverIP,searchPort);
         connectionState=streamSocket.waitForConnected(5000);
     }
     return connectionState;
@@ -103,10 +105,45 @@ bool Core::initConnection(bool type){
 qint64 Core::getFileToUploadSize(QString * filePath){
     return QFile(*filePath).size();
 }
+
+void Core::sendSearchRequest(QString *fileName){
+    writeQStringSock(*fileName,&searchSocket);
+    searchSocket.flush();
+    searchSocket.waitForReadyRead(10000);
+    int mediaAlikeCount=0;
+    QList < Media > listMediaAlike;
+    readIntSock(&mediaAlikeCount,&searchSocket);
+    for(int cpt=0;cpt<mediaAlikeCount;cpt++){
+        QString title = readQStringSock(&searchSocket);
+        QString synopsis = readQStringSock(&searchSocket);
+        QString date = readQStringSock(&searchSocket);
+        Media tmp(cpt,title,synopsis,date);
+        listMediaAlike.push_back(tmp);
+    }
+    emit mediaAlikeList(&listMediaAlike);
+    searchSocket.close();
+}
+
+void Core::engageStream(QString *fileName){
+    if(initConnection(1)){
+        receiveStream(fileName);
+    } else {
+        emit transferMsg(new TransferMessage("Error connecting to the server",-1));
+    }
+}
+
+void Core::engageSearch(QString * fileName){
+    if(initConnection(2)){
+        sendSearchRequest(fileName);
+    } else {
+        emit transferMsg(new TransferMessage("Error connecting to the server",-1));
+    }
+}
+
 void Core::engageUpload(QString * fileName,QString * fileDescription){
     if(initConnection(0)){
         sendFile(fileName,fileDescription);
     } else {
-        emit upLoadResultMsg(new TransferMessage("Error connecting to the server",-1));
+        emit transferMsg(new TransferMessage("Error connecting to the server",-1));
     }
 }
