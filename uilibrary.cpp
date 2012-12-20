@@ -14,7 +14,7 @@ void uiLibrary::search(QString str){
     if(!str.isEmpty()){
         // effectuer le search sur la DB pour avoir un résultat (de type média)
         //core->search(str);
-        emit sendSearchRequest(str);
+        emit sendSearchRequest(&str);
         qDebug() << "search : " << str;
     }
 }

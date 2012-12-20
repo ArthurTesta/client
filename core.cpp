@@ -71,7 +71,7 @@ void Core::receiveStream(QString * mediaName){
         emit transferMsg(new TransferMessage(resultMsg,resultCode));
         streamSocket.close();
     } catch (Exception e){
-        emit transferMsg(new transferMsg(e.what(),-1));
+        emit transferMsg(new TransferMessage(e.what(),-1));
     }
 }
 
