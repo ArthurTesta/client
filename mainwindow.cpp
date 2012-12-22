@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     core = new Core();
+
+    connect(ui->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 }
 
 void MainWindow::showUploadForm(){
@@ -63,15 +65,22 @@ void MainWindow::openFile(){
  * soit on add juste un filename en début de liste (comment ?)
  */
 void MainWindow::refreshListFiles(){
+    ui->menuFichiers_r_cents->clear();
     QList<QFileInfo*>* files= core->getList();
     for(QList<QFileInfo*>::const_iterator it = files->begin(); it != files->end(); it++){
         QFileInfo* file = static_cast<QFileInfo *>(*it);
-        // insérer le nom de fichier dans la liste du menu
         QAction * action = new QAction(this);
         action->setObjectName(file->fileName());
         action->setText(file->completeBaseName());
         ui->menuFichiers_r_cents->addAction(action);
     }
+    QAction * action = new QAction(this);
+    action->setText("Effacer");
+    action->setObjectName("uiEffacer");
+    ui->menuFichiers_r_cents->addSeparator();
+    ui->menuFichiers_r_cents->addAction(action);
+
+    //connect(ui->uiEffacer, SIGNAL(triggered(bool)), this, SLOT(eraseList()));
 }
 
 void MainWindow::selectFileToUpload(){
@@ -91,6 +100,7 @@ void MainWindow::eraseList(){
     if(core){
         core->eraseList();
     }
+    refreshListFiles();
 }
 
 /**
