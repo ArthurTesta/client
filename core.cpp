@@ -38,7 +38,7 @@ void Core::createAction(){
 
 }
 
-bool Core::sendFile(QString * completeFileName,QString * fileDescription) throw (Exception){
+void Core::sendFile(QString * completeFileName,QString * fileDescription) throw (Exception){
     try{
         QFile * myFile = new QFile(*completeFileName);
         int fileSize = myFile->size();

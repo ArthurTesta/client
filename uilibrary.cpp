@@ -29,6 +29,7 @@ void uiLibrary::enterKey(QString str){
          * ressemblant)
          */
         ui->listSearch->show();
+        searchProcess();
     }
 }
 
@@ -36,7 +37,10 @@ void uiLibrary::searchProcess(){
     search(ui->search->text());
 }
 void uiLibrary::receiveSearchResult(QList < Media > * listMediaAlike){
-     //dowhatevayawanthere
+    for(QList<Media>::const_iterator it = listMediaAlike->begin();
+        it != listMediaAlike->end(); it++){
+        qDebug() << static_cast<Media>(*it).getTitle();
+    }
 }
 
 uiLibrary::~uiLibrary()

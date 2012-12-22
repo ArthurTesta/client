@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <media.h>
 
 namespace Ui {
 class uiLibrary;
