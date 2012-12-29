@@ -9,6 +9,8 @@
 #include <QDir>
 #include <QList>
 #include <QMessageBox>
+#include <QVariant>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,31 +18,34 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     core = new Core();
+    core->attacher(this);
 
     connect(ui->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 }
 
+void MainWindow::refresh(SujetDObservation *sdo){
+    if(sdo == core){
+        refreshListFiles();
+    }
+}
+
 void MainWindow::showUploadForm(){
-    qDebug() << "show upload form UI";
     if(!uiUpload){
         uiUpload = new Upload();
     }
-    uiUpload->setWindowModality(Qt::WindowModal);
     createAction();
     uiUpload->show();
 }
 
 void MainWindow::showLibraryUI() {
-    //qDebug() << "show library UI";
     if(!uiLib) {
         uiLib = new uiLibrary();
     }
-    uiLib->setWindowModality(Qt::WindowModal);
+    uiLib->setWindowModality(Qt::ApplicationModal);
     uiLib->show();
 }
 
 void MainWindow::openFile(){
-    //qDebug() << "open file to read";
     /**
      * Modifier le QFileDialog pour bloquer
      * que certain types de fichiers.
@@ -50,37 +55,50 @@ void MainWindow::openFile(){
                 QFileDialog::getOpenFileName(
                     this,
                     "Sélectrionnez un fichier à ouvrir",
-                    QDir::currentPath()
+                    QDir::currentPath(),
+                    tr("All files (*.mkv *.avi);;mkv (*.mkv);;avi (*.avi")
                     ));
     if(file && Tools::isMovie(file)){
         core->setFile(file);
-        refreshListFiles();
     }
 }
 
-/**
- * fonction à modifier car il y a un duplicata des filename dans le menu
- * car on purge pas le menu avant
- * soit on purge et on add la liste + effacer
- * soit on add juste un filename en début de liste (comment ?)
- */
 void MainWindow::refreshListFiles(){
     ui->menuFichiers_r_cents->clear();
-    QList<QFileInfo*>* files= core->getList();
-    for(QList<QFileInfo*>::const_iterator it = files->begin(); it != files->end(); it++){
-        QFileInfo* file = static_cast<QFileInfo *>(*it);
+    disconnect(ui->menuFichiers_r_cents, SIGNAL(triggered(QAction*)),
+               this, SLOT(test(QAction*)));
+    QList<QFileInfo*>* files = core->getList();
+    if(files->isEmpty()){
+        ui->menuFichiers_r_cents->setEnabled(false);
+    }else{
+        ui->menuFichiers_r_cents->setEnabled(true);
+        for(QList<QFileInfo*>::const_iterator it = files->begin();
+            it != files->end(); it++){
+                QFileInfo* file = static_cast<QFileInfo *>(*it);
+                QAction * action = new QAction(this);
+                if(file && action){
+                    action->setData(file->absoluteFilePath());
+                    action->setText(file->completeBaseName());
+                    ui->menuFichiers_r_cents->addAction(action);
+                }
+        }
         QAction * action = new QAction(this);
-        action->setObjectName(file->fileName());
-        action->setText(file->completeBaseName());
-        ui->menuFichiers_r_cents->addAction(action);
+        if(action){
+            action->setText("Effacer");
+            ui->menuFichiers_r_cents->addSeparator();
+            ui->menuFichiers_r_cents->addAction(action);
+        }
+        connect(ui->menuFichiers_r_cents, SIGNAL(triggered(QAction*)),
+                this, SLOT(test(QAction*)));
     }
-    QAction * action = new QAction(this);
-    action->setText("Effacer");
-    action->setObjectName("uiEffacer");
-    ui->menuFichiers_r_cents->addSeparator();
-    ui->menuFichiers_r_cents->addAction(action);
+}
 
-    //connect(ui->uiEffacer, SIGNAL(triggered(bool)), this, SLOT(eraseList()));
+void MainWindow::test(QAction *action){
+    if(action)
+        if(action->data().isNull())
+            eraseList();
+        else
+            qDebug() << action->data();
 }
 
 void MainWindow::selectFileToUpload(){
@@ -89,7 +107,8 @@ void MainWindow::selectFileToUpload(){
                 QFileDialog::getOpenFileName(
                     this,
                     "Sélectrionnez un fichier à ouvrir",
-                    QDir::currentPath()
+                    QDir::currentPath(),
+                    tr("All files (*.mkv *.avi);;mkv (*.mkv);;avi (*.avi")
                     ));
     if(file && Tools::isMovie(file)){
         showUploadForm();
@@ -107,15 +126,22 @@ void MainWindow::eraseList(){
  * @brief connect à redéfinir
  */
 void MainWindow::createAction(){
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
-    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
+    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload,
+            SLOT(updateProgress(qint64)));    //Does not work
+    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,
+            SLOT(engageUpload(QString*,QString*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,
+            SLOT(receiveUploadResult(TransferMessage*)));
 
-    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,SLOT(receiveSearchResult(QList<Media>*)));
-    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
+    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,
+            SLOT(receiveSearchResult(QList<Media>*)));
+    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,
+            SLOT(engageSearch(QString*)));
 
-    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,SLOT(engageStream(QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),this,SLOT(receiveStreamResult(TransferMessage*)));
+    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,
+    //      SLOT(engageStream(QString*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),this,
+            SLOT(receiveStreamResult(TransferMessage*)));
 }
 
 void MainWindow::receiveStreamResult(TransferMessage *msg){
@@ -131,6 +157,11 @@ MainWindow::~MainWindow()
     if(uiUpload){
         delete uiUpload;
         uiUpload = 0;
+    }
+
+    if(uiLib){
+        delete uiLib;
+        uiLib = 0;
     }
 
     if(core){
