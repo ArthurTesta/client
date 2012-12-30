@@ -19,8 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     core = new Core();
     core->attacher(this);
-
-    connect(ui->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
+    createAction();
 }
 
 void MainWindow::refresh(SujetDObservation *sdo){
@@ -33,6 +32,12 @@ void MainWindow::showUploadForm(){
     if(!uiUpload){
         uiUpload = new Upload();
     }
+    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload,
+            SLOT(updateProgress(qint64)));    //Does not work
+    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,
+            SLOT(engageUpload(QString*,QString*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,
+            SLOT(receiveUploadResult(TransferMessage*)));
     createAction();
     uiUpload->show();
 }
@@ -41,6 +46,12 @@ void MainWindow::showLibraryUI() {
     if(!uiLib) {
         uiLib = new uiLibrary();
     }
+    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,
+            SLOT(receiveSearchResult(QList<Media>*)));
+    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,
+            SLOT(engageSearch(QString*)));
+    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,
+    //      SLOT(engageStream(QString*)));
     uiLib->setWindowModality(Qt::ApplicationModal);
     uiLib->show();
 }
@@ -74,13 +85,13 @@ void MainWindow::refreshListFiles(){
         ui->menuFichiers_r_cents->setEnabled(true);
         for(QList<QFileInfo*>::const_iterator it = files->begin();
             it != files->end(); it++){
-                QFileInfo* file = static_cast<QFileInfo *>(*it);
-                QAction * action = new QAction(this);
-                if(file && action){
-                    action->setData(file->absoluteFilePath());
-                    action->setText(file->completeBaseName());
-                    ui->menuFichiers_r_cents->addAction(action);
-                }
+            QFileInfo* file = static_cast<QFileInfo *>(*it);
+            QAction * action = new QAction(this);
+            if(file && action){
+                action->setData(file->absoluteFilePath());
+                action->setText(file->completeBaseName());
+                ui->menuFichiers_r_cents->addAction(action);
+            }
         }
         QAction * action = new QAction(this);
         if(action){
@@ -102,7 +113,7 @@ void MainWindow::test(QAction *action){
 }
 
 void MainWindow::selectFileToUpload(){
-    qDebug() << "select file to upload";
+    qDebug() << "[CLI] - Select file to upload";
     QFileInfo * file = new QFileInfo(
                 QFileDialog::getOpenFileName(
                     this,
@@ -126,20 +137,7 @@ void MainWindow::eraseList(){
  * @brief connect à redéfinir
  */
 void MainWindow::createAction(){
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload,
-            SLOT(updateProgress(qint64)));    //Does not work
-    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,
-            SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,
-            SLOT(receiveUploadResult(TransferMessage*)));
-
-    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,
-            SLOT(receiveSearchResult(QList<Media>*)));
-    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,
-            SLOT(engageSearch(QString*)));
-
-    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,
-    //      SLOT(engageStream(QString*)));
+    connect(ui->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     connect(core,SIGNAL(transferMsg(TransferMessage*)),this,
             SLOT(receiveStreamResult(TransferMessage*)));
 }
