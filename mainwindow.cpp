@@ -26,7 +26,10 @@ void MainWindow::showUploadForm(){
         uiUpload = new Upload();
     }
     uiUpload->setWindowModality(Qt::WindowModal);
-    createAction();
+    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
+    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
+    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
+    //createAction();
     uiUpload->show();
 }
 
@@ -36,6 +39,10 @@ void MainWindow::showLibraryUI() {
         uiLib = new uiLibrary();
     }
     uiLib->setWindowModality(Qt::WindowModal);
+    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,SLOT(receiveSearchResult(QList<Media>*)));
+    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
+
+  //  createAction();
     uiLib->show();
 }
 
@@ -107,12 +114,8 @@ void MainWindow::eraseList(){
  * @brief connect à redéfinir
  */
 void MainWindow::createAction(){
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
-    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
 
-    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,SLOT(receiveSearchResult(QList<Media>*)));
-    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
+
 
     //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,SLOT(engageStream(QString*)));
     connect(core,SIGNAL(transferMsg(TransferMessage*)),this,SLOT(receiveStreamResult(TransferMessage*)));
