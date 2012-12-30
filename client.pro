@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     protocol.cpp \
     transfermessage.cpp \
     uilibrary.cpp \
-    media.cpp
+    media.cpp \
+    sujetdobservation.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
@@ -31,7 +32,9 @@ HEADERS  += mainwindow.h \
     exception.h \
     transfermessage.h \
     uilibrary.h \
-    media.h
+    media.h \
+    observateur.h \
+    sujetdobservation.h
 
 FORMS    += mainwindow.ui \
     upload.ui \
