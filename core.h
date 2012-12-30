@@ -4,12 +4,15 @@
 #include <QFileInfo>
 #include <QList>
 #include <QtNetwork>
+
+#include "sujetdobservation.h"
 #include "exception.h"
 #include "protocol.h"
+
 class MainWindow;
 class TransferMessage;
 class Media;
-class Core : QObject
+class Core : QObject, public SujetDObservation
 {
     Q_OBJECT
 
