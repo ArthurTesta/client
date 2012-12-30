@@ -33,15 +33,7 @@ void MainWindow::showUploadForm(){
     if(!uiUpload){
         uiUpload = new Upload();
     }
-<<<<<<< HEAD
-    uiUpload->setWindowModality(Qt::WindowModal);
-    connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload, SLOT(updateProgress(qint64)));    //Does not work
-    connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,SLOT(engageUpload(QString*,QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),uiUpload,SLOT(receiveUploadResult(TransferMessage*)));
-    //createAction();
-=======
     createAction();
->>>>>>> 238625eaa10984c1e4412c45124977eadc57809f
     uiUpload->show();
 }
 
@@ -49,15 +41,7 @@ void MainWindow::showLibraryUI() {
     if(!uiLib) {
         uiLib = new uiLibrary();
     }
-<<<<<<< HEAD
-    uiLib->setWindowModality(Qt::WindowModal);
-    connect(core,SIGNAL(mediaAlikeList(QList<Media>*)),uiLib,SLOT(receiveSearchResult(QList<Media>*)));
-    connect(uiLib,SIGNAL(sendSearchRequest(QString*)),core,SLOT(engageSearch(QString*)));
-
-  //  createAction();
-=======
     uiLib->setWindowModality(Qt::ApplicationModal);
->>>>>>> 238625eaa10984c1e4412c45124977eadc57809f
     uiLib->show();
 }
 
@@ -142,13 +126,6 @@ void MainWindow::eraseList(){
  * @brief connect à redéfinir
  */
 void MainWindow::createAction(){
-<<<<<<< HEAD
-
-
-
-    //connect(uiLib,SIGNAL(buttonOkPushedSignal(QString*)),core,SLOT(engageStream(QString*)));
-    connect(core,SIGNAL(transferMsg(TransferMessage*)),this,SLOT(receiveStreamResult(TransferMessage*)));
-=======
     connect(&(core->uploadSocket), SIGNAL(bytesWritten(qint64)),uiUpload,
             SLOT(updateProgress(qint64)));    //Does not work
     connect(uiUpload,SIGNAL(uploadSignal(QString*,QString*)),core,
@@ -165,7 +142,6 @@ void MainWindow::createAction(){
     //      SLOT(engageStream(QString*)));
     connect(core,SIGNAL(transferMsg(TransferMessage*)),this,
             SLOT(receiveStreamResult(TransferMessage*)));
->>>>>>> 238625eaa10984c1e4412c45124977eadc57809f
 }
 
 void MainWindow::receiveStreamResult(TransferMessage *msg){
