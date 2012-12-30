@@ -17,6 +17,7 @@ void Core::setFile(QFileInfo *f){
         listFiles->insert(listFiles->begin(), f);
     }
     // traitement possible du fichier pour lecture
+    notifierChangement();
 }
 
 void Core::eraseList(){
@@ -24,6 +25,7 @@ void Core::eraseList(){
         delete listFiles->at(i); // utiliser erase ?
     }
     listFiles->erase(listFiles->begin(), listFiles->end());
+    notifierChangement();
 }
 
 QList<QFileInfo*> * Core::getList(){
@@ -31,13 +33,18 @@ QList<QFileInfo*> * Core::getList(){
 }
 
 Core::~Core(){
-    delete listFiles; // quid de la rÃ©fÃ©rence renvoyÃ©e via le getList() ?
+    delete listFiles; // quid de la référence renvoyée via le getList() ?
 }
 
 void Core::createAction(){
 
 }
 
+/**
+ * @brief Core::sendFile possibilité d'update l'app pendant le traitement ?
+ * @param completeFileName
+ * @param fileDescription
+ */
 void Core::sendFile(QString * completeFileName,QString * fileDescription) throw (Exception){
     try{
         QFile * myFile = new QFile(*completeFileName);
@@ -60,6 +67,11 @@ void Core::sendFile(QString * completeFileName,QString * fileDescription) throw 
         emit transferMsg(new TransferMessage(e.what(),-1));
     }
 }
+
+/**
+ * @brief Core::receiveStream possibilité d'update l'app pendant le traitement ?
+ * @param mediaName
+ */
 void Core::receiveStream(QString * mediaName){
     try {
         writeQStringSock(*mediaName,&streamSocket);

@@ -58,15 +58,8 @@
     <addaction name="actionOuvrir_un_fichier"/>
     <addaction name="actionUploader_un_fichier"/>
    </widget>
-   <widget class="QMenu" name="menuAide">
-    <property name="title">
-     <string>Aide</string>
-    </property>
-    <addaction name="actionA_propos"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
-   <addaction name="menuAide"/>
   </widget>
   <action name="actionQuitter">
    <property name="text">
@@ -97,19 +90,12 @@
     <string>Ctrl+U</string>
    </property>
   </action>
-  <action name="actionEffacer">
-   <property name="text">
-    <string>Effacer</string>
-   </property>
-  </action>
   <action name="actionSelectionnerMediaBiblio">
    <property name="text">
     <string>Sélectionner dans la bibliothèque</string>
    </property>
-  </action>
-  <action name="actionTest">
-   <property name="text">
-    <string>test</string>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>
@@ -121,22 +107,6 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>openFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>329</x>
-     <y>175</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionEffacer</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>eraseList()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

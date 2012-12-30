@@ -11,6 +11,7 @@ Upload::Upload(QWidget *parent) :
     ui(new Ui::Upload),progress(0)
 {
     ui->setupUi(this);
+    ui->labelFileName->setText("");
     createAction();
 }
 
@@ -29,7 +30,7 @@ void Upload::file(){
     QFileInfo * file = new QFileInfo(
                 QFileDialog::getOpenFileName(
                     this,
-                    "SÃ©lectrionnez un fichier Ã  ouvrir",
+                    "Sélectrionnez un fichier à  ouvrir",
                     QDir::currentPath()
                     ));
     fileName = file->completeBaseName();
