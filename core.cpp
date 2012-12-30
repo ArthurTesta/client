@@ -74,7 +74,9 @@ void Core::sendFile(QString * completeFileName,QString * fileDescription) throw 
  */
 void Core::receiveStream(QString * mediaName){
     try {
-        writeQStringSock(*mediaName,&streamSocket);
+        QRegExp regExp("/");
+        QString fileName = mediaName->remove(0,regExp.lastIndexIn((*mediaName))+1);
+        writeQStringSock(fileName,&streamSocket);
         streamSocket.flush();
         streamSocket.waitForReadyRead(10000);
         int resultCode=-1;
@@ -109,7 +111,7 @@ bool Core::initConnection(int type){
         connectionState=streamSocket.waitForConnected(5000);
     }else if(type==2){
         searchSocket.connectToHost(serverIP,searchPort);
-        connectionState=streamSocket.waitForConnected(5000);
+        connectionState=searchSocket.waitForConnected(5000);
     }
     return connectionState;
 }
@@ -118,8 +120,10 @@ qint64 Core::getFileToUploadSize(QString * filePath){
     return QFile(*filePath).size();
 }
 
-void Core::sendSearchRequest(QString *fileName){
-    writeQStringSock(*fileName,&searchSocket);
+void Core::sendSearchRequest(QString * completeFileName){
+    QRegExp regExp("/");
+    QString fileName = completeFileName->remove(0,regExp.lastIndexIn((*completeFileName))+1);
+    writeQStringSock(fileName,&searchSocket);
     searchSocket.flush();
     searchSocket.waitForReadyRead(10000);
     int mediaAlikeCount=0;

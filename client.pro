@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     transfermessage.cpp \
     uilibrary.cpp \
     media.cpp \
-    sujetdobservation.cpp
+    sujetdobservation.cpp \
+    vlc_on_qt.cpp
 
 HEADERS  += mainwindow.h \
     upload.h \
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h \
     uilibrary.h \
     media.h \
     observateur.h \
-    sujetdobservation.h
+    sujetdobservation.h \
+    vlc_on_qt.h
 
 FORMS    += mainwindow.ui \
     upload.ui \
@@ -44,3 +46,5 @@ OTHER_FILES +=
 
 RESOURCES += \
     src.qrc
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += libvlc

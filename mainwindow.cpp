@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "tools.h"
 #include "transfermessage.h"
+#include "vlc_on_qt.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -72,6 +73,8 @@ void MainWindow::openFile(){
     if(file && Tools::isMovie(file)){
         core->setFile(file);
     }
+    Player * p = new Player("rtsp://127.0.0.1:8554/test.mkv");
+    p->show();
 }
 
 void MainWindow::refreshListFiles(){
@@ -145,6 +148,8 @@ void MainWindow::createAction(){
 void MainWindow::receiveStreamResult(TransferMessage *msg){
     if(!msg->getCode()){
         //stream
+        Player * p = new Player("rtsp://127.0.0.1:8554/test.mkv");
+        p->show();
     }else{
         QMessageBox::critical(this,"Stream",msg->getMessage());
     }
